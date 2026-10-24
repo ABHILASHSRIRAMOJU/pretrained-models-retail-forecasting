@@ -18,3 +18,16 @@ segments:
   price_volatile_cv: 0.05         # coef. of variation of price > 5% => volatile
 
 seed: 42
+
+# Phase 2
+lightgbm:
+  num_boost_round: 500
+  params:
+    objective: tweedie
+    tweedie_variance_power: 1.1
+    learning_rate: 0.05
+    num_leaves: 31
+    min_data_in_leaf: 50
+    feature_fraction: 0.8
+    bagging_fraction: 0.8
+    bagging_freq: 1
