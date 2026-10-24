@@ -1,0 +1,8 @@
+# Phase 1
+numpy==2.2.6
+pandas==2.3.3
+scikit-learn==1.7.2
+pyyaml==6.0.3
+matplotlib==3.10.7
+pytest==8.4.2
+# Phase 2 (installed later): lightgbm, chronos-forecasting, torch, neuralforecast

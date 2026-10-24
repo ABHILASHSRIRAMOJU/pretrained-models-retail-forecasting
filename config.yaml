@@ -1,0 +1,20 @@
+# All experiment settings live here. Change values here, not in code.
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  store_id: CA_1
+  items_per_category: 100     # FOODS, HOBBIES, HOUSEHOLD -> ~300 series
+  min_nonzero_days: 30        # drop items that almost never sell
+
+backtest:
+  horizon: 28                 # days per forecast
+  n_folds: 3                  # rolling-origin folds
+  step: 28                    # days between successive cutoffs
+  # Last fold's cutoff = final date - horizon; earlier folds step back by `step`.
+
+segments:
+  intermittent_zero_share: 0.5    # >50% zero days in training => intermittent
+  price_volatile_cv: 0.05         # coef. of variation of price > 5% => volatile
+
+seed: 42

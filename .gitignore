@@ -1,0 +1,29 @@
+# Data (M5 raw files are large and covered by Kaggle's terms)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Secrets
+*.key
+*apikey*
+.env
+kaggle.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+*.egg-info/
+
+# Notebooks / OS / editors
+.ipynb_checkpoints/
+.DS_Store
+.vscode/
+.idea/
+
+# Model downloads / checkpoints
+*.ckpt
+*.pt
+lightning_logs/
