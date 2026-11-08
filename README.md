@@ -14,12 +14,29 @@ tests a small slice of that claim in a retail demand + price setting.
 
 | Phase | Scope | Status |
 |---|---|---|
-| 1 | Data pipeline, backtest harness, baselines | 🚧 in progress |
-| 2 | LightGBM, Chronos (zero-shot), PatchTST | ⏳ |
+| 1 | Data pipeline, backtest harness, baselines | ✅ done |
+| 2 | LightGBM, Chronos (zero-shot), PatchTST | ✅ done |
 | 3 | Price-response curves & price-hike scenarios | ⏳ |
 | 4 | Findings & slides | ⏳ |
 
-Results will be added here only after they are produced by code in this repo.
+## Results so far
+
+Overall, one store (`CA_1`), 300 items, 3 folds × 28 days. Lower MAE / RMSSE is better;
+bias is relative (negative = under-forecast). Numbers come from `results/metrics_*.csv`.
+
+| Model | Uses price? | MAE | RMSSE | Bias |
+|---|---|---|---|---|
+| Seasonal naive | No | 1.262 | 0.963 | −0.041 |
+| Price + last-period ridge | Yes | 1.132 | 0.735 | +0.002 |
+| LightGBM | Yes | 1.097 | **0.726** | −0.031 |
+| Chronos-Bolt, median | No | **0.988** | 0.777 | −0.348 |
+| Chronos-Bolt, mean of quantiles | No | 1.025 | 0.732 | −0.141 |
+| PatchTST | No | 1.052 | 0.731 | −0.067 |
+
+Early read: every model beats seasonal naive, but the gap between the simple price
+baseline and the stronger models is small on RMSSE. Chronos' median gets the lowest
+MAE by forecasting low on intermittent items, which shows up as a large negative bias.
+Segment-level results are in the same CSV files.
 
 ## Method
 
@@ -41,7 +58,10 @@ Results will be added here only after they are produced by code in this repo.
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+brew install libomp          # macOS only, needed by LightGBM
 ```
+
+The first Chronos run downloads the pretrained weights (~200 MB) from Hugging Face.
 
 Download `calendar.csv`, `sales_train_evaluation.csv`, and `sell_prices.csv` from
 [Kaggle M5](https://www.kaggle.com/competitions/m5-forecasting-accuracy/data) into `data/raw/`.
@@ -49,18 +69,27 @@ Download `calendar.csv`, `sales_train_evaluation.csv`, and `sell_prices.csv` fro
 ## Run
 
 ```bash
-pytest                      # leakage + metric tests
-python -m src.run_baselines # writes results/metrics_baselines.csv
+pytest                       # leakage, metric and feature tests
+python -m src.run_baselines  # seasonal naive + price/last-period ridge
+python -m src.run_lightgbm   # LightGBM (also writes feature importance)
+python -m src.run_chronos    # Chronos-Bolt, zero-shot
+python -m src.run_patchtst   # PatchTST (trains with early stopping)
 ```
+
+Each script writes to `results/`: `predictions_<model>.csv`, `metrics_<model>.csv`
+(overall and by segment), and `run_config_<model>.json` (the exact config and seed used).
+Model settings live in `config.yaml`.
 
 ## Repo layout
 
 ```
 config.yaml          subset, horizon, folds, seed
 src/data.py          load M5, subset, wide -> long
+src/features.py      lag, rolling, calendar and price features (LightGBM)
 src/backtest.py      folds, shared model interface, metrics, segments
 src/models/          one file per model
-tests/               no-leakage and metric tests
+src/run_*.py         one entry point per model
+tests/               no-leakage, metric and feature tests
 results/             generated metrics and figures
 ```
 
