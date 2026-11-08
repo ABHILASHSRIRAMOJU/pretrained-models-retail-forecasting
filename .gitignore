@@ -27,3 +27,6 @@ __pycache__/
 *.ckpt
 *.pt
 lightning_logs/
+
+# Local-only assistant brief
+CLAUDE.md
