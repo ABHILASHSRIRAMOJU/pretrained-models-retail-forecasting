@@ -7,4 +7,6 @@ matplotlib==3.10.7
 pytest==8.4.2
 # Phase 2
 lightgbm==4.7.0    # macOS also needs: brew install libomp
-# Phase 2 (installed later): chronos-forecasting, torch, neuralforecast
+chronos-forecasting==2.3.2
+torch==2.15.0
+neuralforecast==3.3.0

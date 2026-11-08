@@ -1,0 +1,35 @@
+{
+  "data": {
+    "raw_dir": "data/raw",
+    "processed_dir": "data/processed",
+    "store_id": "CA_1",
+    "items_per_category": 100,
+    "min_nonzero_days": 30
+  },
+  "backtest": {
+    "horizon": 28,
+    "n_folds": 3,
+    "step": 28
+  },
+  "segments": {
+    "intermittent_zero_share": 0.5,
+    "price_volatile_cv": 0.05
+  },
+  "seed": 42,
+  "lightgbm": {
+    "num_boost_round": 500,
+    "params": {
+      "objective": "tweedie",
+      "tweedie_variance_power": 1.1,
+      "learning_rate": 0.05,
+      "num_leaves": 31,
+      "min_data_in_leaf": 50,
+      "feature_fraction": 0.8,
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1
+    }
+  },
+  "chronos": {
+    "model_id": "amazon/chronos-bolt-small"
+  }
+}

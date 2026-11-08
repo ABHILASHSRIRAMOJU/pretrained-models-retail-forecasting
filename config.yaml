@@ -31,3 +31,13 @@ lightgbm:
     feature_fraction: 0.8
     bagging_fraction: 0.8
     bagging_freq: 1
+
+chronos:
+  model_id: amazon/chronos-bolt-small   # zero-shot, not trained on our data
+
+patchtst:
+  input_size: 112        # days of history per window (4 x 28)
+  max_steps: 2000        # upper bound; early stopping usually ends sooner
+  patience: 3            # validation checks (every 100 steps) without improvement
+  learning_rate: 0.0001
+  batch_size: 32
