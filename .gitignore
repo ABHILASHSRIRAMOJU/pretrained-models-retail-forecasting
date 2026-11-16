@@ -28,5 +28,5 @@ __pycache__/
 *.pt
 lightning_logs/
 
-# Local-only assistant brief
+# Local-only files
 CLAUDE.md
