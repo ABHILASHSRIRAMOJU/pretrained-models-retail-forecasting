@@ -14,10 +14,10 @@ tests a small slice of that claim in a retail demand + price setting.
 
 | Phase | Scope | Status |
 |---|---|---|
-| 1 | Data pipeline, backtest harness, baselines | ✅ done |
-| 2 | LightGBM, Chronos (zero-shot), PatchTST | ✅ done |
-| 3 | Price-response curves & price-hike scenarios | ⏳ |
-| 4 | Findings & slides | ⏳ |
+| 1 | Data pipeline, backtest harness, baselines | Done |
+| 2 | LightGBM, Chronos (zero-shot), PatchTST | Done |
+| 3 | Price-response curves & price-hike scenarios | Pending |
+| 4 | Findings & slides | Pending |
 
 ## Results so far
 

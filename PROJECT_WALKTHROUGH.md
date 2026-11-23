@@ -238,7 +238,7 @@ This is the bar the ML and pretrained models must clear.
 | 2 | Chronos-Bolt, zero-shot (pretrained, no training on our data) | No, it only sees past `units` |
 | 2 | PatchTST trained on our subset | No |
 | 3 | Price-response curves and +5% / +10% / +15% price-hike scenarios | Yes |
-| 4 | README findings and team slides | — |
+| 4 | README findings and team slides | Not applicable |
 
 All new models will plug into the same `fit` / `predict` interface and run through the
 same folds, metrics and segments, so their numbers sit right next to the table above.
